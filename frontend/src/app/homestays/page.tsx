@@ -5,7 +5,6 @@ import HomestayCard from '@/components/HomestayCard';
 export default function HomestaysPage() {
   return (
     <div className="bg-gray-900 min-h-screen">
-      <Header />
       <div className="max-w-6xl mx-auto bg-white rounded-t-3xl p-6">
         <Breadcrumbs />
         <h2 className="text-xl font-semibold my-4">Homestay</h2>
