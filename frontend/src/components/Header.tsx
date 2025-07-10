@@ -1,14 +1,15 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
-  // Close on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -19,7 +20,6 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
 
-  // Close on ESC
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsOpen(false);
@@ -27,6 +27,13 @@ export default function Header() {
     document.addEventListener('keydown', handleEsc);
     return () => document.removeEventListener('keydown', handleEsc);
   }, []);
+
+  const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Spots', href: '/spots' },
+    { name: 'Homestays', href: '/homestays' },
+  ];
 
   return (
     <>
@@ -50,10 +57,19 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex space-x-2 border border-gray-300 rounded-full p-1 absolute left-1/2 transform -translate-x-1/2">
-            <Link href="/" className="px-4 py-2 rounded-full bg-black text-white text-sm font-medium transition-colors duration-200">Home</Link>
-            <Link href="/about" className="px-4 py-2 rounded-full text-black text-sm font-medium hover:bg-gray-100">About</Link>
-            <Link href="/spots" className="px-4 py-2 rounded-full text-black text-sm font-medium hover:bg-gray-100">Spots</Link>
-            <Link href="/homestays" className="px-4 py-2 rounded-full text-black text-sm font-medium hover:bg-gray-100">Homestays</Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                  pathname === link.href
+                    ? 'bg-black text-white'
+                    : 'text-black hover:bg-gray-100'
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
           </nav>
 
           {/* Animated icon */}
@@ -80,10 +96,18 @@ export default function Header() {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="md:hidden fixed top-12 left-0 right-0 z-[50] bg-white shadow-lg px-6 py-6 space-y-4"
           >
-            <Link href="/" onClick={() => setIsOpen(false)} className="block text-black text-base font-medium">Home</Link>
-            <Link href="/about" onClick={() => setIsOpen(false)} className="block text-black text-base font-medium">About</Link>
-            <Link href="/spots" onClick={() => setIsOpen(false)} className="block text-black text-base font-medium">Spots</Link>
-            <Link href="/homestays" onClick={() => setIsOpen(false)} className="block text-black text-base font-medium">Homestays</Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`block text-base font-medium ${
+                  pathname === link.href ? 'text-black font-semibold underline' : 'text-black'
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
