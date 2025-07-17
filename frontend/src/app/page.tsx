@@ -1,5 +1,8 @@
 import AboutSection from '@/components/AboutSection';
 import CarouselHero from '@/components/Carousel';
+import HomestayCarousel from '@/components/HomestayCarousel';
+import NewsSection from '@/components/NewsSection';
+import VacationSpotCarousel from '@/components/VacationSpotCarousel';
 import React from 'react';
 
 // Optional: Metadata for the page
@@ -22,28 +25,10 @@ export default function LongTestPage() {
 
 
     <AboutSection/>
+    <NewsSection/>
+    <VacationSpotCarousel/>
+    <HomestayCarousel/>
 
-      {/* Footer-like section */}
-      <section
-        id="end-section"
-        style={{
-          minHeight: '50vh', // Shorter final section
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#222',
-          color: 'white',
-          fontSize: '2em',
-          textAlign: 'center',
-          padding: '20px'
-        }}
-      >
-        <h3>End of Test Page</h3>
-        <p style={{ fontSize: '0.6em' }}>
-          You've reached the bottom! Now test the "Scroll to Top" button.
-        </p>
-      </section>
     </div>
   );
 }
