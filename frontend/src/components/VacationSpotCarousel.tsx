@@ -89,6 +89,7 @@ function VacationSpotCarousel() {
   }
 
   return (
+    <section id="vacation-spot">
     <div className="mx-auto px-4 py-8 bg-white">
       {/* Header Section */}
       <div className="text-center mb-8">
@@ -102,7 +103,7 @@ function VacationSpotCarousel() {
 
       {/* Carousel Section */}
       <div className="relative">
-        <div className="overflow-visible" style={{ minHeight: '550px', paddingTop: '40px', paddingBottom: '40px' }}>
+        <div className="overflow-hidden" style={{ minHeight: '550px', paddingTop: '40px', paddingBottom: '40px' }}>
           <div 
             className={`flex gap-4 transition-all duration-500 ease-in-out items-end ${
               isAnimating ? 'transform' : ''
@@ -196,6 +197,7 @@ function VacationSpotCarousel() {
         </div>
       </div>
     </div>
+    </section>
   );
 };
 

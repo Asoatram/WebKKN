@@ -90,7 +90,7 @@ export default function HomestayCarousel() {
 
       {/* Carousel */}
       <div className="relative">
-        <div className="overflow-visible pt-10 pb-10" style={{ minHeight: '550px' }}>
+        <div className="overflow-hidden pt-10 pb-10" style={{ minHeight: '550px' }}>
           <div className="flex gap-4 items-end">
             {getVisibleItems().map((item, index) => (
               <motion.div

@@ -16,7 +16,7 @@ const newsItems: NewsItem[] = [
     category: 'Entertainment',
     title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
     date: '26 Agustus 2028',
-    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop', // Update with your image path
+    imageUrl: '/Foto-berita.png', // Update with your image path
   },
   // Repeat for additional items
   {
@@ -24,21 +24,21 @@ const newsItems: NewsItem[] = [
     category: 'Entertainment',
     title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
     date: '26 Agustus 2028',
-    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop',
+    imageUrl: '/Foto-berita.png',
   },
   {
     id: 3,
     category: 'Entertainment',
     title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
     date: '26 Agustus 2028',
-    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop',
+    imageUrl: '/Foto-berita.png',
   },
   {
     id: 4,
     category: 'Entertainment',
     title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
     date: '26 Agustus 2028',
-    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop',
+    imageUrl: '/Foto-berita.png',
   },
 ];
 
