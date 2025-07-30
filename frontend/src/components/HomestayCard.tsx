@@ -6,7 +6,7 @@ import Image from 'next/image'
 interface Props {
   name: string
   image: string
-  facilities: string[]
+  fasilitas: string[]
   mapsLink: string
   whatsapp: string
 }
@@ -14,11 +14,14 @@ interface Props {
 export default function HomestayCard({
   name,
   image,
-  facilities,
+  fasilitas,
   mapsLink,
   whatsapp,
 }: Props) {
-  const slug = name.toLowerCase().replace(/\s+/g, '-')
+  const slug = name;
+
+  // URL WhatsApp dibuat di sini
+  const whatsappUrl = `https://wa.me/${whatsapp}`;
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
@@ -29,8 +32,14 @@ export default function HomestayCard({
 
       {/* Konten */}
       <div className="p-4">
-        {/* Nama homestay yang bisa diklik ke Google Maps */}
-        <div className="flex items-center gap-2 mb-1">
+        {/* ====================================================== */}
+        {/* PERUBAHAN DI SINI                                     */}
+        {/* ====================================================== */}
+        <a
+          href={mapsLink}
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 mb-1 text-sm font-semibold hover:cursor-pointer hover:underline"
+        >
           <Image
             src="/icons/location.png"
             alt="Lokasi"
@@ -38,19 +47,13 @@ export default function HomestayCard({
             height={16}
             className="opacity-60"
           />
-          <a
-            href={mapsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-semibold hover:underline"
-          >
-            {name}
-          </a>
-        </div>
+          {name}
+        </a>
+        {/* ====================================================== */}
 
         {/* Fasilitas */}
         <p className="text-xs text-gray-500">
-          Fasilitas: {facilities.slice(0, 3).join(', ')}...
+          Fasilitas: {(Array.isArray(fasilitas) ? fasilitas.join(', ') : fasilitas) || ''}
         </p>
 
         {/* Tombol aksi */}
@@ -63,7 +66,7 @@ export default function HomestayCard({
           </Link>
 
           <a
-            href={whatsapp}
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs bg-white border text-black rounded-full px-2 py-1 hover:bg-gray-100 transition"

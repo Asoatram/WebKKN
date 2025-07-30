@@ -3,9 +3,27 @@
 import Header from '@/components/Header'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import HomestayCard from '@/components/HomestayCard'
-import { homestayData } from '@/components/CarouselHomestay'
+import { useEffect, useState } from 'react'
+
+type Homestay = {
+  id: string
+  name: string
+  image: string
+  fasilitas: string[] // backend harus kirim array string, bukan string biasa
+  mapsLink: string
+  whatsapp: string
+}
 
 export default function HomestaysPage() {
+  const [homestays, setHomestays] = useState<Homestay[]>([])
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/homestays')
+      .then((res) => res.json())
+      .then((data) => setHomestays(data))
+      .catch((err) => console.error('Fetch error:', err))
+  }, [])
+
   return (
     <div className="bg-gray-900 min-h-screen">
       <Header />
@@ -15,12 +33,12 @@ export default function HomestaysPage() {
         <h2 className="text-xl font-semibold my-4">Homestay</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {homestayData.map((h, i) => (
+          {homestays.map((h, i) => (
             <HomestayCard
               key={i}
-              name={h.title}
+              name={h.name}
               image={h.image}
-              facilities={h.fasilitas}
+              fasilitas={h.fasilitas} // ⬅️ pastikan ini array
               mapsLink={h.mapsLink}
               whatsapp={h.whatsapp}
             />
