@@ -38,23 +38,26 @@ export default function LatestNews() {
   }
 
   return (
-    <section className="bg-white px-8 py-12 text-black mx-auto">
-      <h2 className="text-3xl font-bold mb-4">Latest <span className="block">News</span></h2>
-      <hr className="border-t w-32 border-black mb-8" />
+<section className="bg-white px-8 py-12 text-black">
+  <div className="max-w-6xl mx-auto">
+    <h2 className="text-3xl font-bold mb-4">
+      Latest <span className="block">News</span>
+    </h2>
+    <hr className="border-t w-32 border-black mb-8" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Main news */}
-        <div className="space-y-3">
+        <div className="space-y-3 flex flex-col">
           <Image
-            src={newsItems[0].image}
+            src={newsItems[0].image || '/fallback-image.jpg'}
             alt="Main news"
             width={600}
             height={400}
             className="rounded-lg object-cover w-full"
           />
-          <p className="text-sm text-red-500 font-medium">{newsItems[0].category}</p>
-          <h3 className="text-lg font-semibold">{newsItems[0].title}</h3>
-          <p className="text-sm text-gray-600">{newsItems[0].date}</p>
+          <a  href={`/article/${newsItems[0].id}`} className="text-sm text-red-500 font-medium">{newsItems[0].category}</a>
+          <a  href={`/article/${newsItems[0].id}`} className="text-lg font-semibold">{newsItems[0].title}</a>
+          <a  href={`/article/${newsItems[0].id}`} className="text-sm text-gray-600">{newsItems[0].date}</a>
         </div>
 
         {/* Other news */}
@@ -63,22 +66,24 @@ export default function LatestNews() {
             <div key={item.id} className="flex gap-4">
               <div className="flex-shrink-0">
                 <Image
-                  src={item.image}
+                  src={item.image || '/fallback-image.jpg'}
                   alt={item.title}
                   width={150}
                   height={200}
                   className="rounded-md object-cover"
                 />
               </div>
-              <div>
-                <p className="text-sm text-red-500 font-medium">{item.category}</p>
-                <h4 className="text-sm font-semibold">{item.title}</h4>
-                <p className="text-xs text-gray-600">{item.date}</p>
+              <div className='flex flex-col'>
+                  <a  href={`/article/${item.id}`} className="text-sm hover:cursor-pointer text-red-500 font-medium">{item.category}</a>
+                  <a  href={`/article/${item.id}`} className="text-sm hover:cursor-pointer font-semibold">{item.title}</a>
+                  <a  href={`/article/${item.id}`} className="text-xs hover:cursor-pointer text-gray-600">{item.date}</a>
+
               </div>
             </div>
           ))}
         </div>
       </div>
-    </section>
+  </div>
+</section>
   );
 }

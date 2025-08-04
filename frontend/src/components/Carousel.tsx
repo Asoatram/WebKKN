@@ -20,7 +20,7 @@ export default function CarouselHero() {
       title: "Paradise Found",
       subtitle: "Hidden Gems of Indonesian Islands",
       description: "Immerse yourself in crystal-clear waters and vibrant coral reefs. Perfect for snorkeling, diving, and experiencing the rich marine biodiversity of tropical paradise.",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3& ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       cta: "Dive In"
     },
     {

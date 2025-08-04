@@ -19,7 +19,7 @@ export default function ArticlePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/articles')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles`)
       .then((res) => res.json())
       .then((data) => {
         setArticles(data);
