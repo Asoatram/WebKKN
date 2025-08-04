@@ -6,104 +6,46 @@ type Homestay = {
   id: string
   name: string
   image: string
-  fasilitas: string[] // backend harus kirim array string, bukan string biasa
+  fasilitas: string[]
   mapsLink: string
   whatsapp: string
 }
 
-export default function HomestaysPage() {
-  const [homestays, setHomestays] = useState<Homestay[]>([])
-
-useEffect(() => {
-  fetch('http://localhost:5000/api/homestays')
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("DATA DARI BACKEND:", data)
-      // Jika datanya dibungkus dalam objek
-      if (Array.isArray(data)) {
-        setHomestays(data)
-      } else if (Array.isArray(data.data)) {
-        setHomestays(data.data)
-      } else {
-        console.error('Format respons tidak sesuai:', data)
-        setHomestays([])
-      }
-    })
-    .catch((err) => console.error('Fetch error:', err))
-}, [])
-
-
-
-export const homestayData = [
-  {
-    id: 1,
-    title: "Homestay Tok Dalang",
-    subtitle: "Rupat Utara, Riau",
-    description: "1 kasur, WiFi, kamar mandi dalam, dekat pantai. Cocok untuk liburan tenang di tengah alam.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80",
-    mapsLink: "https://www.google.com/maps?q=Homestay+Tok+Dalang",
-    whatsapp: "https://wa.me/6281234567890",
-    fasilitas: [
-      "1 kasur",
-      "WiFi",
-      "Kamar mandi dalam",
-      "Dekat pantai",
-      "Parkir gratis"
-    ]
-  },
-  {
-    id: 2,
-    title: "Homestay Pantai Damai",
-    subtitle: "Teluk Rhu, Rupat Utara",
-    description: "Nikmati suasana nyaman dengan fasilitas lengkap di tepi pantai.",
-    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1920&q=80",
-    mapsLink: "https://www.google.com/maps?q=Homestay+Pantai+Damai",
-    whatsapp: "https://wa.me/6289876543210",
-    fasilitas: [
-      "2 kasur",
-      "AC & WiFi",
-      "Kamar mandi",
-      "Dapur kecil",
-      "Dekat warung makan"
-    ]
-  },
-  {
-    id: 3,
-    title: "Homestay Laut Tenang",
-    subtitle: "Pasir Putih, Rupat",
-    description: "Suasana laut yang menenangkan, cocok untuk keluarga atau pasangan.",
-    image: "https://picsum.photos/id/1018/1920/1080",
-    mapsLink: "https://www.google.com/maps?q=Homestay+Laut+Tenang",
-    whatsapp: "https://wa.me/6285678901234",
-    fasilitas: [
-      "1 tempat tidur queen",
-      "WiFi",
-      "Dekat pantai pasir putih",
-      "Pemandangan laut",
-      "Sarapan tersedia"
-    ]
-  }
-]
-
 export default function CarouselHomestay() {
+  const [homestays, setHomestays] = useState<Homestay[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
 
   useEffect(() => {
-    if (isPlaying) {
+    fetch('http://localhost:5000/api/homestays')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setHomestays(data)
+        } else if (Array.isArray(data.data)) {
+          setHomestays(data.data)
+        } else {
+          console.error('Format respons tidak sesuai:', data)
+        }
+      })
+      .catch((err) => console.error('Fetch error:', err))
+  }, [])
+
+  useEffect(() => {
+    if (isPlaying && homestays.length > 0) {
       const interval = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % homestayData.length)
+        setCurrentSlide((prev) => (prev + 1) % homestays.length)
       }, 5000)
       return () => clearInterval(interval)
     }
-  }, [isPlaying])
+  }, [isPlaying, homestays])
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % homestayData.length)
+    setCurrentSlide((prev) => (prev + 1) % homestays.length)
   }
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + homestayData.length) % homestayData.length)
+    setCurrentSlide((prev) => (prev - 1 + homestays.length) % homestays.length)
   }
 
   const goToSlide = (index: number) => {
@@ -114,16 +56,19 @@ export default function CarouselHomestay() {
     setIsPlaying(!isPlaying)
   }
 
+  if (homestays.length === 0) {
+    return <div className="text-center text-gray-500 py-20">Loading homestays...</div>
+  }
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {homestayData.map((slide, index) => (
+      {homestays.map((slide, index) => (
         <div
           key={slide.id}
           className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
             index === currentSlide ? 'opacity-100 z-30' : 'opacity-0 z-0'
           }`}
         >
-          {/* Background image */}
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${slide.image})`, zIndex: 10 }}
@@ -131,7 +76,6 @@ export default function CarouselHomestay() {
             <div className="absolute inset-0 bg-black/40" />
           </div>
 
-          {/* Foreground content */}
           <div className="relative z-40 flex items-center justify-center h-full px-4 sm:px-8">
             <div className="max-w-3xl text-center text-white">
               <a
@@ -140,18 +84,10 @@ export default function CarouselHomestay() {
                 rel="noopener noreferrer"
                 className="text-4xl sm:text-6xl font-bold block hover:underline"
               >
-                {slide.title}
+                {slide.name}
               </a>
-              <a
-                href={slide.mapsLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-lg sm:text-xl block mb-2 hover:underline"
-              >
-                {slide.subtitle}
-              </a>
-              <p className="mb-4 text-sm sm:text-base opacity-90">{slide.description}</p>
-              <ul className="text-sm sm:text-base mb-6 opacity-90">
+              <p className="text-lg sm:text-xl block mb-2 opacity-90">{slide.id}</p>
+              <ul className="text-sm sm:text-base mb-4 opacity-90">
                 {slide.fasilitas.map((item, idx) => (
                   <li key={idx}>• {item}</li>
                 ))}
@@ -181,7 +117,7 @@ export default function CarouselHomestay() {
 
       {/* Dots Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex space-x-3">
-        {homestayData.map((_, index) => (
+        {homestays.map((_, index) => (
           <button key={index} onClick={() => goToSlide(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               index === currentSlide ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
@@ -200,7 +136,7 @@ export default function CarouselHomestay() {
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-50">
         <div
           className="h-full bg-white transition-all duration-300"
-          style={{ width: `${((currentSlide + 1) / homestayData.length) * 100}%` }}
+          style={{ width: `${((currentSlide + 1) / homestays.length) * 100}%` }}
         />
       </div>
     </div>

@@ -13,55 +13,49 @@ interface Homestay {
 }
 
 export default function HomestayCarousel() {
+  const [homestays, setHomestays] = useState<Homestay[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-
-  const homestays: Homestay[] = [
-    {
-      id: 1,
-      name: 'Homestay Tok Dalang',
-      location: 'Desa Wisata Kasongan',
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=700&fit=crop',
-    },
-    {
-      id: 2,
-      name: 'Homestay Anggrek',
-      location: 'Desa Wisata Kasongan',
-      image: 'https://images.unsplash.com/photo-1600585154206-934e6c44d0f1?w=500&h=700&fit=crop',
-    },
-    {
-      id: 3,
-      name: 'Homestay Mawar',
-      location: 'Desa Wisata Kasongan',
-      image: 'https://images.unsplash.com/photo-1600585153837-73ebc2f1cfc9?w=500&h=700&fit=crop',
-    },
-    {
-      id: 4,
-      name: 'Homestay Melati',
-      location: 'Desa Wisata Kasongan',
-      image: 'https://images.unsplash.com/photo-1600585153884-6a8d0e61d325?w=500&h=700&fit=crop',
-    },
-  ];
+  const [loading, setLoading] = useState(true);
 
   const itemsPerView = 4;
 
   useEffect(() => {
+    fetch('http://localhost:5000/api/homestays')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setHomestays(data);
+        } else if (Array.isArray(data.data)) {
+          setHomestays(data.data);
+        } else {
+          console.error('Unexpected data format:', data);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch homestays:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      if (!isAnimating) nextSlide();
+      if (!isAnimating && homestays.length > 0) nextSlide();
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isAnimating]);
+  }, [isAnimating, homestays]);
 
   function nextSlide() {
-    if (isAnimating) return;
+    if (isAnimating || homestays.length === 0) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev + 1) % homestays.length);
     setTimeout(() => setIsAnimating(false), 1000);
   }
 
   function prevSlide() {
-    if (isAnimating) return;
+    if (isAnimating || homestays.length === 0) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev - 1 + homestays.length) % homestays.length);
     setTimeout(() => setIsAnimating(false), 1000);
@@ -74,6 +68,14 @@ export default function HomestayCarousel() {
       items.push(homestays[index]);
     }
     return items;
+  }
+
+  if (loading) {
+    return <div className="text-center py-16 text-gray-500">Loading homestays...</div>;
+  }
+
+  if (homestays.length === 0) {
+    return <div className="text-center py-16 text-gray-500">No homestays found.</div>;
   }
 
   return (
