@@ -17,12 +17,24 @@ type Homestay = {
 export default function HomestaysPage() {
   const [homestays, setHomestays] = useState<Homestay[]>([])
 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/homestays')
-      .then((res) => res.json())
-      .then((data) => setHomestays(data))
-      .catch((err) => console.error('Fetch error:', err))
-  }, [])
+useEffect(() => {
+  fetch('http://localhost:5000/api/homestays')
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("DATA DARI BACKEND:", data)
+      // Jika datanya dibungkus dalam objek
+      if (Array.isArray(data)) {
+        setHomestays(data)
+      } else if (Array.isArray(data.data)) {
+        setHomestays(data.data)
+      } else {
+        console.error('Format respons tidak sesuai:', data)
+        setHomestays([])
+      }
+    })
+    .catch((err) => console.error('Fetch error:', err))
+}, [])
+
 
   return (
     <div className="bg-gray-900 min-h-screen">

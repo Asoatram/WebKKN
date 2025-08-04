@@ -20,34 +20,58 @@ function VacationSpotCarousel() {
   const carouselItems: CarouselItem[] = [
     {
       id: 1,
-      title: "Tempat 1",
-      subtitle: "Tanjung Medang",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=300&h=200&fit=crop"
+      title: "Beting Aceh",
+      subtitle: "Rupat Utara",
+      image: "/betingAceh.jpg"
     },
     {
       id: 2,
-      title: "Tempat 2",
-      subtitle: "Tanjung Medang",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=300&h=200&fit=crop"
+      title: "Pantai Tanjung Lapin",
+      subtitle: "Tanjung Punak",
+      image: "/tanjungLapin.jpg"
     },
     {
       id: 3,
-      title: "Tempat 3",
-      subtitle: "Tanjung Medang",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=300&h=200&fit=crop"
+      title: "Pantai Pesona",
+      subtitle: "Teluk Rhu",
+      image: "/PantaiPesonaTelukRhuRupatUtara.png"
     },
     {
       id: 4,
-      title: "Tempat 4",
-      subtitle: "Tanjung Medang",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=300&h=200&fit=crop"
+      title: "Pantai Tanjung Jaya",
+      subtitle: "Teluk Rhu",
+      image: "/tanjungJaya.jpg"
     },
     {
       id: 5,
-      title: "Tempat 5",
+      title: "Pulau Beruk",
       subtitle: "Tanjung Medang",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=300&h=200&fit=crop"
-    }
+      image: "/pulauBeruk.png"
+    },
+    {
+      id: 6,
+      title: "Kelenteng",
+      subtitle: "Tanjung Medang",
+      image: "/kelenteng.png"
+    },
+    {
+      id: 7,
+      title: "Vihara Wisata Maitreya",
+      subtitle: "Tanjung Medang",
+      image: "/vihara.png"
+    },
+    {
+      id: 8,
+      title: "Masjid Besar",
+      subtitle: "Tanjung Medang",
+      image: "/masjid.png"
+    },
+    {
+      id: 9,
+      title: "Pantai Tanjung Medang",
+      subtitle: "Tanjung Medang",
+      image: "/tanjungMedang.jpg"
+    },
   ];
 
   const itemsPerView = 4;

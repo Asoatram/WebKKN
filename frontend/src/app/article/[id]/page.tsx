@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import ArticleCard from './components/ArticleCard';
+import { useParams } from 'next/navigation';
+
 
 type Article = {
   title: string;
@@ -10,8 +12,6 @@ type Article = {
   author: string;
   date: string;
   category: string;
-  createdat: string;
-  updatedat: string;
 };
 
 export default function ArticlePage() {

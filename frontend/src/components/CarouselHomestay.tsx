@@ -2,6 +2,38 @@
 import React, { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 
+type Homestay = {
+  id: string
+  name: string
+  image: string
+  fasilitas: string[] // backend harus kirim array string, bukan string biasa
+  mapsLink: string
+  whatsapp: string
+}
+
+export default function HomestaysPage() {
+  const [homestays, setHomestays] = useState<Homestay[]>([])
+
+useEffect(() => {
+  fetch('http://localhost:5000/api/homestays')
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("DATA DARI BACKEND:", data)
+      // Jika datanya dibungkus dalam objek
+      if (Array.isArray(data)) {
+        setHomestays(data)
+      } else if (Array.isArray(data.data)) {
+        setHomestays(data.data)
+      } else {
+        console.error('Format respons tidak sesuai:', data)
+        setHomestays([])
+      }
+    })
+    .catch((err) => console.error('Fetch error:', err))
+}, [])
+
+
+
 export const homestayData = [
   {
     id: 1,

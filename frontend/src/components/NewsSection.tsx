@@ -1,5 +1,5 @@
 'use client';
-
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 interface NewsItem {
@@ -7,42 +7,36 @@ interface NewsItem {
   category: string;
   title: string;
   date: string;
-  imageUrl: string;
+  image: string;
 }
 
-const newsItems: NewsItem[] = [
-  {
-    id: 1,
-    category: 'Entertainment',
-    title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
-    date: '26 Agustus 2028',
-    imageUrl: '/Foto-berita.png', // Update with your image path
-  },
-  // Repeat for additional items
-  {
-    id: 2,
-    category: 'Entertainment',
-    title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
-    date: '26 Agustus 2028',
-    imageUrl: '/Foto-berita.png',
-  },
-  {
-    id: 3,
-    category: 'Entertainment',
-    title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
-    date: '26 Agustus 2028',
-    imageUrl: '/Foto-berita.png',
-  },
-  {
-    id: 4,
-    category: 'Entertainment',
-    title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
-    date: '26 Agustus 2028',
-    imageUrl: '/Foto-berita.png',
-  },
-];
-
 export default function LatestNews() {
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/articles/news/featured')
+      .then((res) => res.json())
+      .then((data) => {
+        setNewsItems(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Fetch error:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading || newsItems.length === 0) {
+    return (
+      <section className="bg-white px-8 py-12 text-black mx-auto">
+        <h2 className="text-3xl font-bold mb-4">Latest <span className="block">News</span></h2>
+        <hr className="border-t w-32 border-black mb-8" />
+        <p>Loading...</p>
+      </section>
+    );
+  }
+
   return (
     <section className="bg-white px-8 py-12 text-black mx-auto">
       <h2 className="text-3xl font-bold mb-4">Latest <span className="block">News</span></h2>
@@ -52,7 +46,7 @@ export default function LatestNews() {
         {/* Main news */}
         <div className="space-y-3">
           <Image
-            src={newsItems[0].imageUrl}
+            src={newsItems[0].image}
             alt="Main news"
             width={600}
             height={400}
@@ -64,12 +58,12 @@ export default function LatestNews() {
         </div>
 
         {/* Other news */}
-        <div className="grid grid-rows-3  gap-4">
+        <div className="grid grid-rows-3 gap-4">
           {newsItems.slice(1).map((item) => (
             <div key={item.id} className="flex gap-4">
               <div className="flex-shrink-0">
                 <Image
-                  src={item.imageUrl}
+                  src={item.image}
                   alt={item.title}
                   width={150}
                   height={200}
