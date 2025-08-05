@@ -119,10 +119,6 @@ function VacationSpotCarousel() {
         <div className="text-center mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">With Pride</h1>
           <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Presenting, Rupat Utara</p>
-          <button className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition-colors text-sm sm:text-base">
-            See more
-            <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
-          </button>
         </div>
 
         {/* Carousel Section */}

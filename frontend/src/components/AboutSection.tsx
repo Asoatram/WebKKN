@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function AboutSection() {
   return (
-    <section className="px-6 py-12 md:py-20 bg-white text-gray-900">
+    <section id='about' className="px-6 py-12 md:py-20 bg-white text-gray-900">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
         {/* Left Title Section */}
         <div className="md:w-1/2">

@@ -38,7 +38,7 @@ export default function LatestNews() {
   }
 
   return (
-<section className="bg-white px-8 py-12 text-black">
+<section id="news" className="bg-white px-8 py-12 text-black">
   <div className="max-w-6xl mx-auto">
     <h2 className="text-3xl font-bold mb-4">
       Latest <span className="block">News</span>

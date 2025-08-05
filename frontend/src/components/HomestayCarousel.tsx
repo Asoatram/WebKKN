@@ -79,15 +79,18 @@ export default function HomestayCarousel() {
   }
 
   return (
+    <section id='homestays'>
     <div className="mx-auto px-4 py-8 bg-white">
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Feels like Home</h1>
         <p className="text-gray-600 mb-6">Enjoy your stay in Kasongan</p>
+        <a href='/homestays' className="inline-block mb-4">
         <button className="inline-flex items-center px-6 py-3 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition-colors">
           See more
           <ArrowRight className="ml-2 h-4 w-4" />
         </button>
+        </a>
       </div>
 
       {/* Carousel */}
@@ -163,5 +166,6 @@ export default function HomestayCarousel() {
         </div>
       </div>
     </div>
+    </section>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Lenis from "lenis"; // Import the core lenis library
-import { usePathname, useSearchParams } from "next/navigation"; // For resetting scroll on route change
+import { usePathname } from "next/navigation"; // For resetting scroll on route change
 
 interface LenisClientProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ interface LenisClientProps {
 const LenisClient: React.FC<LenisClientProps> = ({ children }) => {
   const lenisRef = useRef<Lenis | null>(null);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+
 
   useEffect(() => {
     // Initialize Lenis only on the client side
@@ -52,7 +52,7 @@ const LenisClient: React.FC<LenisClientProps> = ({ children }) => {
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
     }
-  }, [pathname, searchParams]); // Re-run when pathname or searchParams change
+  }, [pathname]); // Re-run when pathname or searchParams change
 
   return <>{children}</>;
 };

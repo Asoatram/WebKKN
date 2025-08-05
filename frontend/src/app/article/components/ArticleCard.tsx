@@ -1,57 +1,41 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
-export default function ArticleCard() {
-  const articleText = `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-qui ratione voluptatem sequi nesciunt. \n\n Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. \n\n Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam,
-nisi ut aliquid ex ea commodi consequatur? \n\n Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
-vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?`;
-
-  return (
-    <div className="py-6">
-      <section className="max-w-5xl mx-auto px-4 py-12 text-center">
-        <p className="text-red-600 text-sm font-medium mb-2">Entertainment</p>
-        <h1 className="text-2xl text-black md:text-3xl font-semibold mb-6">
-          Lorem ipsum dolor sit amet,<br />
-          consectetur adipiscing
-        </h1>
-        <div className="overflow-hidden shadow-md">
-          <Image
-            src="/Foto-berita.png"
-            alt="Article cover"
-            width={1200}
-            height={600}
-            className="w-full h-auto object-cover"
-          />
-        </div>
-      </section>
-
-      <section className="max-w-4xl mx-auto px-4 py-12 text-neutral-800">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Left Column */}
-          <div className="text-sm text-gray-600 space-y-4 md:col-span-1">
-            <div>
-              <p className="font-semibold text-black">Contributor</p>
-              <p>Ikhwan Teladan</p>
-            </div>
-            <div>
-              <p className="font-semibold text-black">Date</p>
-              <p>28 Juni 2026</p>
-            </div>
-          </div>
-
-          {/* Right Column */}
-          <div className="text-sm leading-relaxed text-gray-600 text-justify space-y-4 md:col-span-3">
-            {articleText.split('\n\n').map((para, idx) => (
-              <p key={idx}>{para}</p>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+export interface NewsItem {
+  id: number;
+  category: string;
+  title: string;
+  date: string;
+  image: string;
 }
+
+interface NewsCardProps {
+  news: NewsItem;
+}
+
+const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
+  return (
+    <Link
+      href={`/news/${news.id}`}
+      className="flex items-start gap-6 pb-6 border-b max-w-6xl mx-auto hover:bg-gray-50 transition rounded-lg px-4 py-2"
+    >
+      <Image
+        src={news.image}
+        alt={news.title}
+        width={200}
+        height={130}
+        className="rounded min-w-[200px] object-cover"
+      />
+      <div>
+        <p className="text-red-600 text-sm font-medium mb-1">{news.category}</p>
+        <h2 className="text-xl font-semibold leading-snug mb-2">{news.title}</h2>
+        <p className="text-sm text-gray-500">{news.date}</p>
+      </div>
+    </Link>
+  );
+};
+
+
+export default NewsCard;

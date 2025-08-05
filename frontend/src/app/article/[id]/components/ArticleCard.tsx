@@ -56,7 +56,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
 
           {/* Right Column */}
           <div className="text-sm leading-relaxed text-gray-600 text-justify space-y-4 md:col-span-3">
-            {article.content.split('\n\n').map((para, idx) => (
+            {article.content.split('\n').map((para, idx) => (
               <p key={idx}>{para}</p>
             ))}
           </div>

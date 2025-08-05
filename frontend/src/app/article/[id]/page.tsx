@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import ArticleCard from './components/ArticleCard';
 import { useParams } from 'next/navigation';
+import LenisClient from '@/app/providers/LenisScrollPRoviders';
 
 type Article = {
   title: string;
@@ -13,16 +14,11 @@ type Article = {
   category: string;
 };
 
-export default function ArticlePage() {
-  const params = useParams();
-  const id = params?.id as string;
-
+function ArticleContent({ id }: { id: string }) {
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return;
-
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -35,15 +31,32 @@ export default function ArticlePage() {
       });
   }, [id]);
 
+  if (loading) {
+    return <p className="text-center py-10">Loading article...</p>;
+  }
+
+  if (!article) {
+    return <p className="text-center py-10">Article not found.</p>;
+  }
+
+  return <ArticleCard article={article} />;
+}
+
+export default function ArticlePage() {
+  const params = useParams();
+  const id = params?.id as string;
+
+  if (!id) {
+    return <p className="text-center py-10">No article ID provided.</p>;
+  }
+
   return (
-    <div className="bg-white">
-      {loading ? (
-        <p className="text-center py-10">Loading article...</p>
-      ) : article ? (
-        <ArticleCard article={article} />
-      ) : (
-        <p className="text-center py-10">Article not found.</p>
-      )}
-    </div>
+    <LenisClient>
+      <Suspense fallback={<p className="text-center py-10">Loading article...</p>}>
+        <div className="bg-white">
+          <ArticleContent id={id} />
+        </div>
+      </Suspense>
+    </LenisClient>
   );
 }

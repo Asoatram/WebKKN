@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.42",
+    "@studio-freight/tempus": "^0.0.44",
     "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.6",
@@ -17,7 +19,8 @@
     "next": "15.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "swr": "^2.3.3"
+    "swr": "^2.3.3",
+    "tempus": "^1.0.0-dev.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
